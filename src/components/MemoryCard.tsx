@@ -13,7 +13,7 @@ export function MemoryCard({
   document,
 }: {
   memory: MemoryRow;
-  document?: DocumentRow;
+  document?: DocumentRow | undefined;
 }) {
   const [editing, setEditing] = useState(false);
 
