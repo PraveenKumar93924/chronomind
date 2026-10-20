@@ -24,7 +24,7 @@ function friendlyAiError(error: unknown): Error {
  * Calls Lovable AI (Responses API) and returns the complete text.
  * The call is streamed and consumed server-side so long documents don't time out.
  */
-export async function generateAiText(messages: ModelMessage[]): Promise<string> {
+export async function generateAiText(messages: ModelMessage[], instructions?: string): Promise<string> {
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) {
     throw new Error("AI is not configured for this app yet.");
@@ -44,6 +44,7 @@ export async function generateAiText(messages: ModelMessage[]): Promise<string> 
   try {
     const result = streamText({
       model: provider.responses(MODEL),
+      instructions,
       messages,
       maxRetries: 1,
       providerOptions: {

@@ -224,15 +224,10 @@ export const askMemory = createServerFn({ method: "POST" })
 
     const reply = await generateAiText([
       {
-        role: "system",
-        content:
-          "You are ChronoMind, answering questions about the user's own personal history. Use ONLY the supplied records. If the records do not contain the answer, say so plainly. Address the user as 'you'. Reply with ONLY a JSON object: {\"answer\": string, \"source_document_ids\": string[]} where source_document_ids lists the source document ids you used.",
-      },
-      {
         role: "user",
         content: `Today is ${new Date().toISOString().slice(0, 10)}.\n\nMy records:\n${context_text}\n\nMy question: ${data.question}`,
       },
-    ]);
+    ], "You are ChronoMind, answering questions about the user's own personal history. Use ONLY the supplied records. If the records do not contain the answer, say so plainly. Address the user as 'you'. Reply with ONLY a JSON object: {\"answer\": string, \"source_document_ids\": string[]} where source_document_ids lists the source document ids you used.");
 
     const parsed = parseJsonReply<{ answer?: string; source_document_ids?: string[] }>(reply);
     const sources = (parsed.source_document_ids ?? [])
