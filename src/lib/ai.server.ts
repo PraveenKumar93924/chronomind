@@ -44,7 +44,7 @@ export async function generateAiText(messages: ModelMessage[], instructions?: st
   try {
     const result = streamText({
       model: provider.responses(MODEL),
-      instructions,
+      ...(instructions === undefined ? {} : { instructions }),
       messages,
       maxRetries: 1,
       providerOptions: {
